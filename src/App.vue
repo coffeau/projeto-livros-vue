@@ -1,47 +1,43 @@
 <template>
-  <div class="container">
-    <h2>{{ título }}</h2>
-
-    <div class="input-group">
-      <input @keyup.enter="adicionarTarefa" v-model="novaTarefa" type="text">
-      <span>
-        <button @click="adicionarTarefa" class="btn btn primary">Adicionar</button>
-      </span>
-    </div>
-    <ul>
-      <li v-for="(tarefa, index) in tarefas" :key="index" :class="{'removed': tarefa.checked}">
-        <input v-model="tarefa.checked" type="checkbox">
-        <label>{{ tarefa.título }}</label>
-      </li>
-    </ul>
-    <footer>
-      <em>Altere aqui o nome de sua lista de tarefas</em>
-      <input v-model="título" type="text">
-    </footer>
-  </div>
+  <section>
+    <div class="container">
+      <heather :valor="título"/>
+      <adicionarLivro v-on:adicionarLivro="adicionarLivro" />
+      <listaLivros :livros="livros" />
+      <footer>
+        <em>Altere aqui o nome de sua lista de livros</em>
+        <entradaDados v-model="título" type="text" />
+      </footer>
+      </div>
+  </section>
 </template>
 
 <script>
 
+import heather from "@/components/heather";
+import listaLivros from "@/components/listaLivros";
+import adicionarLivro from "@/components/adicionarLivro";
+import entradaDados from "@/components/templates/entradaDados"
+
 export default {
   name: 'App',
+  components: {heather, listaLivros, adicionarLivro, entradaDados},
   data(){
     return{
-      título: "Minha lista de tarefas",
-      novaTarefa: "",
-      tarefas: [
-        {título: "Estudar", checked: false},
-        {título: "Programar", checked: true},
+      título: "Minha lista de livros",
+      novoLivro: "",
+      livros: [
+        {título: "A onda", autor: "Todd Strasser" },
+        {título: "De Profundis", autor:"Oscar Wilde" },
       ]
     }
   },
   methods: {
-    adicionarTarefa(){
-      this.tarefas.push({
-        título: this.novaTarefa,
-        checked:false,
+    adicionarLivro(novoCampo){
+      this.livros.push({
+        título: novoCampo.novoLivro,
+        autor: novoCampo.novoAutor
       })
-      this.novaTarefa = ""
     }
   }
 }
@@ -52,13 +48,6 @@ export default {
 .container{
   width:40%;
   margin: 20px auto 20px auto;  
-}
-
-.removed{
- color:gray; 
-}
-.removed label{
-  text-decoration: line-through;
 }
 
 ul li{
