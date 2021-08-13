@@ -10,6 +10,8 @@ export default {
 };
 </script>
 
-<style>
-
+<style scoped>
+* {
+  font-family: 'Quicksand', sans-serif;
+}
 </style>
